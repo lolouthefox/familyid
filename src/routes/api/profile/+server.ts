@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import type { RequestHandler } from '../token/$types';
 import { db } from '$lib/server/db';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ request }) => {
 	const authHeader = request.headers.get('Authorization');
 	if (!authHeader || !authHeader.startsWith('Bearer ')) {
 		throw new Error('Invalid authorization header');
