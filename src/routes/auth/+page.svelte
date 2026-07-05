@@ -51,6 +51,7 @@
 		class="max-w-dvw w-full p-4 bg-white flex flex-col items-center fixed inset-0 rounded-0 md:rounded-3xl md:static md:max-w-md"
 	>
 		<img src="/branding/logo-color-alt.svg" alt="Logo" class="h-12 m-4 mb-8" />
+
 		{#if action === 'login'}
 			<h1 class="text-2xl text-left w-full mb-2">Login</h1>
 			<form action="?/login" method="post" class="w-full flex flex-col gap-1" use:enhance>
@@ -81,6 +82,10 @@
 			<p class="text-red-500">{form?.error}</p>
 		{:else}
 			<div class="flex flex-col gap-1 w-full">
+				<p class="mb-4">
+					Plus besoin de créer un compte pour chaque service que vous utilisez, FamilyID vous permet
+					d'accéder à tous les services que vous utilisez comme Pit Stop, Homeflix, et plus encore.
+				</p>
 				<Button onclick={() => (action = 'login')}>Login</Button>
 				<Button onclick={() => (action = 'register')}>Register</Button>
 			</div>
