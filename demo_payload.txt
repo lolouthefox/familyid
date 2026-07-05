@@ -1,1 +1,1 @@
-http://localhost:5173/oauth?app_id=d5b5358f-54ee-4b82-8399-7979126d17a9&redirect_uri=https://pit-stop.liam-cheneval.dev/auth-back/&scope=openid,profile&response_type=code
+https://familyid.liam-cheneval.dev/oauth?app_id=d5b5358f-54ee-4b82-8399-7979126d17a9&redirect_uri=https://pit-stop.liam-cheneval.dev/auth-back/&scope=openid,profile&response_type=code

@@ -78,7 +78,7 @@ export const load = async ({ url, cookies }) => {
 };
 
 export const actions = {
-	default: async ({ request, url, cookies }) => {
+	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const appId = data.get('app_id') as string;
 		const redirectUri = data.get('redirect_uri') as string;
@@ -136,6 +136,6 @@ export const actions = {
 		const newUrl = new URL(redirectUri);
 		newUrl.searchParams.set('code', insertedCode);
 		newUrl.searchParams.set('state', state);
-		redirect(307, newUrl.toString());
+		return { redirectNow: newUrl.toString() };
 	}
 };

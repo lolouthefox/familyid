@@ -9,6 +9,9 @@
 	let appId: string | null = $state(null);
 
 	onMount(() => {
+		if (form?.redirectNow) {
+			window.location.href = form.redirectNow;
+		}
 		const urlParams = new URLSearchParams(window.location.search);
 		redirectUrl = urlParams.get('redirect_uri') ?? '/';
 		appId = urlParams.get('app_id');
