@@ -1,5 +1,9 @@
 import { db } from '$lib/server/db';
-import { code as codeTable, token as tokenTable } from '$lib/server/db/schema';
+import {
+	code as codeTable,
+	token as tokenTable,
+	application as applicationTable
+} from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 
@@ -10,6 +14,26 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	if (grant_type !== 'authorization_code') {
 		throw new Error('Invalid grant type');
+	}
+
+	// Check headers
+	const authHeader = request.headers.get('Authorization');
+	if (!authHeader || !authHeader.startsWith('Basic ')) {
+		throw new Error('Invalid authorization header');
+	}
+
+	// Check credentials
+	const credentials = Buffer.from(authHeader.split(' ')[1], 'base64').toString('utf-8');
+	const [clientId, clientSecret] = credentials.split(':');
+	if (!clientId || !clientSecret) {
+		throw new Error('Invalid credentials');
+	}
+	const application = await db
+		.select()
+		.from(applicationTable)
+		.where(and(eq(applicationTable.id, clientId), eq(applicationTable.secret, clientSecret)));
+	if (application.length === 0) {
+		throw new Error('Invalid credentials');
 	}
 
 	// Check and code against the database
