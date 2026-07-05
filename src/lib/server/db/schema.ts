@@ -36,7 +36,8 @@ export const code = pgTable('code', {
 		.references(() => application.id, { onDelete: 'cascade' }),
 	userId: text('user_id')
 		.notNull()
-		.references(() => user.id, { onDelete: 'cascade' })
+		.references(() => user.id, { onDelete: 'cascade' }),
+	redirectUri: text('redirect_uri').notNull()
 });
 
 export const token = pgTable('token', {

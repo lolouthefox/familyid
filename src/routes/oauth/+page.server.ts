@@ -129,7 +129,7 @@ export const actions = {
 		const expiresAt = new Date(Date.now() + 300000).toISOString(); // 5 minutes
 		const codeDb = await db
 			.insert(codeTable)
-			.values({ id: code, applicationId: appId, scope, userId, expiresAt })
+			.values({ id: code, applicationId: appId, scope, userId, expiresAt, redirectUri })
 			.returning();
 		const insertedCode = codeDb[0].id;
 
