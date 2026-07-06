@@ -1,5 +1,9 @@
 <script lang="ts">
 	const profilePictures = {
+		Default: {
+			path: 'https://familyid.liam-cheneval.dev/pfp/familyid/',
+			number: 1
+		},
 		Family: {
 			path: 'https://familyid.liam-cheneval.dev/pfp/family/',
 			number: 6
