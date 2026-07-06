@@ -8,6 +8,11 @@
 	let redirectUrl: string | null = $state(null);
 	let appId: string | null = $state(null);
 
+	const scopeTranslations = {
+		openid: 'Identifiant unique',
+		profile: 'Informations personnelles'
+	};
+
 	onMount(() => {
 		if (form?.redirectNow) {
 			window.location.href = form.redirectNow;
@@ -58,7 +63,7 @@
 				<p>{data.app.name} wants access to some of your data:</p>
 				<ul class="list-disc">
 					{#each data.scopes as scope (scope)}
-						<li class="ml-5">{scope}</li>
+						<li class="ml-5">{scopeTranslations[scope]}</li>
 					{/each}
 				</ul>
 				<form method="post">
