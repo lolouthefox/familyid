@@ -3,6 +3,7 @@ import { redirect } from '@sveltejs/kit';
 import { session as sessionTable } from '$lib/server/db/schema';
 import { user as userTable } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+import { application as appsTable } from '$lib/server/db/schema';
 
 export const load = async ({ cookies }) => {
 	const sessionId = cookies.get('session_id');
@@ -25,5 +26,13 @@ export const load = async ({ cookies }) => {
 		return redirect(307, '/auth?redirect_uri=' + encodeURIComponent('/'));
 	}
 
-	return { user: session.user };
+	const apps = await db
+		.select({
+			id: appsTable.id,
+			name: appsTable.name,
+			icon: appsTable.iconUrl
+		})
+		.from(appsTable);
+
+	return { user: session.user, apps };
 };
