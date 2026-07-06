@@ -59,8 +59,8 @@
 		{:else}
 			<div class="flex flex-col gap-1 w-full">
 				<img src={data.app.iconUrl} alt={data.app.name} class="h-12 w-12" />
-				<h1 class="text-2xl text-left w-full mb-2">Login to {data.app.name}</h1>
-				<p>{data.app.name} wants access to some of your data:</p>
+				<h1 class="text-2xl text-left w-full mb-2">Autorisez {data.app.name}</h1>
+				<p>{data.app.name} veut accéder à ces données :</p>
 				<ul class="list-disc">
 					{#each data.scopes as scope (scope)}
 						<li class="ml-5">{scopeTranslations[scope]}</li>
@@ -71,7 +71,7 @@
 					<input type="hidden" name="redirect_uri" value={redirectUrl} />
 					<input type="hidden" name="scope" value={data.scopes.join(',')} />
 					<input type="hidden" name="response_type" value="code" />
-					<Button type="submit">Login to {data.app.name}</Button>
+					<Button type="submit">Autoriser {data.app.name}</Button>
 				</form>
 			</div>
 		{/if}
