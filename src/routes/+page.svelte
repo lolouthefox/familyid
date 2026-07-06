@@ -94,7 +94,7 @@
 	>
 		<img src="/branding/logo-color-alt.svg" alt="Logo" class="h-10 m-2 md:h-12 md:m-4 md:mb-8" />
 		<div class="w-full overflow-x-auto">
-			<div class="flex gap-2 p-4 align-center">
+			<div class="flex gap-2 py-4 align-center">
 				<button
 					class="py-2 px-4 rounded-full bg-gray-200 disabled:bg-pink-700 disabled:text-white"
 					disabled={tab === 'profil'}
