@@ -33,7 +33,8 @@ export const GET: RequestHandler = async ({ request }) => {
 		.select({
 			id: userTable.id,
 			username: userTable.username,
-			role: userTable.role
+			role: userTable.role,
+			profilePicture: userTable.profilePicture
 		})
 		.from(userTable)
 		.where(eq(userTable.id, tokenData[0].userId));
