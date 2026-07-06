@@ -119,7 +119,12 @@
 		</div>
 		{#if tab === 'profil'}
 			<img src={data.user.profilePicture} alt="" class="h-32 m-4 mb-2 rounded-full" />
-			<h1 class="text-2xl font-bold mb-8">{data.user.username}</h1>
+			<h1 class="text-2xl font-bold mb-8 flex items-center gap-1">
+				{data.user.username}
+				{#if data.user.role === 'admin'}
+					<i class="ph-fill ph-shield-star text-pink-700"></i>
+				{/if}
+			</h1>
 			<Button type="submit" onclick={logout}>Logout</Button>
 		{:else if tab === 'modifier'}
 			<div class="overflow-y-scroll flex-1 w-full flex flex-col gap-2 mt-4">
