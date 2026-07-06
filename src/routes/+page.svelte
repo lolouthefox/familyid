@@ -5,7 +5,7 @@
 	let tab = $state('profil');
 </script>
 
-<main class="fixed inset-0 flex items-start justify-center bg-gray-100 md:pt-16">
+<main class="fixed inset-0 flex items-start justify-center bg-gray-100 md:pt-16 max-h-dvh">
 	<div
 		class="max-w-dvw w-full p-4 bg-white flex flex-col items-center fixed inset-0 rounded-0 md:rounded-3xl md:static md:max-w-md"
 	>
@@ -44,7 +44,9 @@
 				<button type="submit">Save</button>
 			</form>
 		{:else if tab === 'avatar'}
-			<PfpSelector />
+			<div class="overflow-y-scroll flex-1 w-full">
+				<PfpSelector currentPfp={data.user.profilePicture} />
+			</div>
 		{:else if tab === 'apps'}
 			<div class="w-full flex flex-col">
 				<p>Voici toutes les applications disponibles sur FamilyID.</p>

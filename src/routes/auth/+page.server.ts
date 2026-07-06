@@ -32,7 +32,9 @@ export const actions = {
 
 		const sessionId = await createSession(user.id);
 		cookies.set('session_id', sessionId, {
-			path: '/'
+			path: '/',
+			sameSite: 'lax',
+			secure: false
 		});
 
 		redirect(307, redirectUrl);

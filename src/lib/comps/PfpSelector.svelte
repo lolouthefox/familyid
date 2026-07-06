@@ -1,4 +1,6 @@
 <script lang="ts">
+	let { currentPfp } = $props();
+
 	const profilePictures = {
 		Default: {
 			path: 'https://familyid.liam-cheneval.dev/pfp/familyid/',
@@ -27,21 +29,25 @@
 	};
 </script>
 
-<div class="max-h-dvh overflow-y-scroll">
-	<div class="flex flex-col gap-4">
-		{#each Object.keys(profilePictures) as packName, i (i)}
-			{@const pack = profilePictures[packName]}
+<div class="flex flex-col gap-4 w-full">
+	{#each Object.keys(profilePictures) as packName, i (i)}
+		{@const pack = profilePictures[packName]}
 
-			<div class="flex flex-col gap-2">
-				<h2 class="text-xl font-bold">{packName}</h2>
-				<div class="w-full overflow-x-scroll">
-					<div class="flex gap-2">
-						{#each new Array(pack.number) as _, i (i)}
-							<img src={pack.path + (i + 1) + '.png'} alt={packName} class="h-32 rounded-2xl" />
-						{/each}
-					</div>
+		<div class="flex flex-col gap-2">
+			<h2 class="text-xl font-bold">{packName}</h2>
+			<div class="w-full overflow-x-scroll no-scrollbar p-2">
+				<div class="flex gap-2 w-fit">
+					{#each new Array(pack.number) as _, i (i)}
+						<button
+							onclick={() => (currentPfp = pack.path + (i + 1) + '.png')}
+							class="disabled:ring-pink-700 disabled:ring-2 rounded-2xl overflow-hidden h-32 w-32"
+							disabled={currentPfp === pack.path + (i + 1) + '.png'}
+						>
+							<img src={pack.path + (i + 1) + '.png'} alt={packName} class="h-32 w-32" />
+						</button>
+					{/each}
 				</div>
 			</div>
-		{/each}
-	</div>
+		</div>
+	{/each}
 </div>
