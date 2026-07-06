@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { currentPfp } = $props();
+	let { currentPfp, setProfilePicture } = $props();
 
 	const profilePictures = {
 		Default: {
@@ -39,7 +39,10 @@
 				<div class="flex gap-2 w-fit">
 					{#each new Array(pack.number) as _, i (i)}
 						<button
-							onclick={() => (currentPfp = pack.path + (i + 1) + '.png')}
+							onclick={() => {
+								currentPfp = pack.path + (i + 1) + '.png';
+								setProfilePicture(currentPfp);
+							}}
 							class="disabled:ring-pink-700 disabled:ring-2 rounded-2xl overflow-hidden h-32 w-32"
 							disabled={currentPfp === pack.path + (i + 1) + '.png'}
 						>

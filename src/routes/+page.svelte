@@ -1,8 +1,91 @@
-<script>
+<script lang="ts">
+	import Button from '$lib/comps/Button.svelte';
+	import Input from '$lib/comps/Input.svelte';
 	import PfpSelector from '$lib/comps/PfpSelector.svelte';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 	let tab = $state('profil');
+
+	let upToDate = $state(true);
+	let updated = $state(false);
+	let errored = $state(false);
+
+	let newUsername = $state('');
+	let newPassword = $state('');
+
+	onMount(() => {
+		// Initialize newUsername with the user's current username
+		newUsername = data.user.username;
+	});
+
+	function notifyUpdated() {
+		upToDate = true;
+		updated = true;
+		setTimeout(() => {
+			updated = false;
+		}, 3000);
+	}
+	function notifyErrored() {
+		upToDate = true;
+		errored = true;
+		setTimeout(() => {
+			errored = false;
+		}, 3000);
+	}
+
+	async function setProfilePicture(pfp: string) {
+		upToDate = false;
+		const res = await fetch('/api/profile', {
+			method: 'PUT',
+			body: JSON.stringify({ pfp })
+		});
+		if (res.ok) {
+			data.user.profilePicture = pfp;
+			notifyUpdated();
+		} else {
+			notifyErrored();
+		}
+	}
+
+	async function updateUsername() {
+		upToDate = false;
+		const res = await fetch('/api/profile', {
+			method: 'PUT',
+			body: JSON.stringify({ username: newUsername })
+		});
+		if (res.ok) {
+			data.user.username = newUsername;
+			notifyUpdated();
+		} else {
+			notifyErrored();
+		}
+	}
+
+	async function updatePassword() {
+		upToDate = false;
+		const res = await fetch('/api/profile', {
+			method: 'PUT',
+			body: JSON.stringify({ password: newPassword })
+		});
+		if (res.ok) {
+			notifyUpdated();
+		} else {
+			notifyErrored();
+		}
+	}
+
+	async function logout() {
+		upToDate = false;
+		const res = await fetch('/api/logout', {
+			method: 'POST'
+		});
+		if (res.ok) {
+			window.location.href = '/';
+		} else {
+			notifyErrored();
+		}
+	}
 </script>
 
 <main class="fixed inset-0 flex items-start justify-center bg-gray-100 md:pt-16 max-h-dvh">
@@ -37,15 +120,20 @@
 		{#if tab === 'profil'}
 			<img src={data.user.profilePicture} alt="" class="h-32 m-4 mb-2 rounded-full" />
 			<h1 class="text-2xl font-bold mb-8">{data.user.username}</h1>
+			<Button type="submit" onclick={logout}>Logout</Button>
 		{:else if tab === 'modifier'}
-			<form>
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="username" value={data.user.username} />
-				<button type="submit">Save</button>
-			</form>
+			<div class="overflow-y-scroll flex-1 w-full flex flex-col gap-2 mt-4">
+				<label for="username">Nom d'utilisateur:</label>
+				<Input type="text" id="username" name="username" bind:value={newUsername} />
+				<Button type="submit" onclick={updateUsername}>Save</Button>
+
+				<label for="password">Mot de passe:</label>
+				<Input type="password" id="password" name="password" bind:value={newPassword} />
+				<Button type="submit" onclick={updatePassword}>Save</Button>
+			</div>
 		{:else if tab === 'avatar'}
 			<div class="overflow-y-scroll flex-1 w-full">
-				<PfpSelector currentPfp={data.user.profilePicture} />
+				<PfpSelector currentPfp={data.user.profilePicture} {setProfilePicture} />
 			</div>
 		{:else if tab === 'apps'}
 			<div class="w-full flex flex-col">
@@ -64,3 +152,23 @@
 		{/if}
 	</div>
 </main>
+
+{#if !upToDate}
+	<p
+		class="text-center bg-gray-950 text-white fixed bottom-2 px-4 py-2 rounded-full left-1/2 -translate-x-1/2"
+	>
+		Mise à jour...
+	</p>
+{:else if updated}
+	<p
+		class="text-center bg-green-800 text-white fixed bottom-2 px-4 py-2 rounded-full left-1/2 -translate-x-1/2"
+	>
+		À jour!
+	</p>
+{:else if errored}
+	<p
+		class="text-center bg-red-800 text-white fixed bottom-2 px-4 py-2 rounded-full left-1/2 -translate-x-1/2"
+	>
+		Un problème est survenu
+	</p>
+{/if}
