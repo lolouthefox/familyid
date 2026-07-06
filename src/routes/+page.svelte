@@ -9,7 +9,7 @@
 	<div
 		class="max-w-dvw w-full p-4 bg-white flex flex-col items-center fixed inset-0 rounded-0 md:rounded-3xl md:static md:max-w-md"
 	>
-		<img src="/branding/logo-color-alt.svg" alt="Logo" class="h-12 m-4 mb-8" />
+		<img src="/branding/logo-color-alt.svg" alt="Logo" class="h-10 m-2 md:h-12 md:m-4 md:mb-8" />
 		<div class="flex gap-2 w-full p-4 justify-center align-center">
 			<button
 				class="py-2 px-4 rounded-full bg-gray-200 disabled:bg-pink-700 disabled:text-white"
@@ -25,6 +25,11 @@
 				class="py-2 px-4 rounded-full bg-gray-200 disabled:bg-pink-700 disabled:text-white"
 				disabled={tab === 'avatar'}
 				onclick={() => (tab = 'avatar')}>Avatar</button
+			>
+			<button
+				class="py-2 px-4 rounded-full bg-gray-200 disabled:bg-pink-700 disabled:text-white"
+				disabled={tab === 'apps'}
+				onclick={() => (tab = 'apps')}>Apps</button
 			>
 		</div>
 		{#if tab === 'profil'}
