@@ -10,7 +10,7 @@ export const user = pgTable('user', {
 		.default(sql`CURRENT_TIMESTAMP`),
 	role: text('role').notNull().default('user'),
 	profilePicture: text('profile_picture').default(
-		'https://familyid.liam-cheneval.dev/pfp/default.png'
+		'https://familyid.liam-cheneval.dev/pfp/familyid/1.png'
 	)
 });
 
