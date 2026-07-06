@@ -8,7 +8,10 @@ export const user = pgTable('user', {
 	createdAt: text('created_at')
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
-	role: text('role').notNull().default('user')
+	role: text('role').notNull().default('user'),
+	profilePicture: text('profile_picture').default(
+		'https://familyid.liam-cheneval.dev/pfp/default.png'
+	)
 });
 
 export const session = pgTable('session', {

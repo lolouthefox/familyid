@@ -2,25 +2,7 @@
 	import Button from '$lib/comps/Button.svelte';
 	import { onMount } from 'svelte';
 
-	interface App {
-		id: string;
-		name: string;
-		iconUrl: string;
-	}
-
-	interface PageData {
-		error?: string;
-		app?: App;
-		scopes?: string[];
-		state?: string;
-	}
-
-	interface FormData {
-		error?: string;
-		redirectNow?: string;
-	}
-
-	let { data, form }: { data: PageData; form: FormData | null } = $props();
+	let { data, form } = $props();
 
 	let expandErrorDetails = $state(false);
 	let redirectUrl: string | null = $state(null);
@@ -42,7 +24,7 @@
 </script>
 
 <main
-	class="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-pink-50 to-pink-100"
+	class="fixed inset-0 flex items-center justify-center bg-linear-to-br from-pink-50 to-pink-100"
 >
 	<div
 		class="max-w-dvw w-full p-4 bg-white flex flex-col items-start fixed inset-0 rounded-0 md:rounded-2xl md:static md:max-w-md md:shadow-2xl"
@@ -104,7 +86,7 @@
 				{#if data.app}
 					<div class="flex items-center gap-4">
 						<div
-							class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden"
+							class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden"
 						>
 							<img src={data.app.iconUrl} alt={data.app.name} class="w-full h-full object-cover" />
 						</div>
@@ -124,7 +106,7 @@
 							{#each data.scopes as scope (scope)}
 								<li class="flex items-center gap-3 text-gray-700">
 									<svg
-										class="w-5 h-5 text-pink-600 flex-shrink-0"
+										class="w-5 h-5 text-pink-600 shrink-0"
 										fill="currentColor"
 										viewBox="0 0 20 20"
 									>
@@ -150,12 +132,9 @@
 					<input type="hidden" name="redirect_uri" value={redirectUrl} />
 					<input type="hidden" name="scope" value={data.scopes?.join(',') ?? ''} />
 					<input type="hidden" name="response_type" value="code" />
-					<button
-						type="submit"
-						class="w-full bg-pink-700 text-white font-semibold py-3 rounded-lg hover:bg-pink-800 transition duration-200 active:scale-95 transform"
-					>
+					<Button type="submit">
 						Autoriser {data.app?.name}
-					</button>
+					</Button>
 					<!-- <a
 						href="/"
 						class="block w-full text-center text-gray-600 hover:text-gray-800 font-medium py-2 transition-colors"
